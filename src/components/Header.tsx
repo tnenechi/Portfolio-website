@@ -48,7 +48,7 @@ const Header = () => {
             </button>
 
             {isMenuOpen && (
-              <div className="z-40 bg-primary-20 fixed top-0 right-0 w-2/3 h-full shadow-2xl">
+              <div className="z-40 bg-primary-20 fixed top-0 right-0 w-1/3 h-full shadow-2xl md:hidden">
                 <div
                   className="flex justify-end p-2 m-4 cursor-pointer text-white"
                   onClick={() => setIsMenuOpen(false)}
