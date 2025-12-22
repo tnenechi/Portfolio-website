@@ -1,11 +1,20 @@
-import React from 'react'
+import { motion } from "framer-motion";
 
-type Props = {}
+type Props = {
+  setSelectedPage: (page: string) => void;
+};
 
-const Projects = (props: Props) => {
+const Projects = ({ setSelectedPage }: Props) => {
   return (
-    <div>Projects</div>
-  )
-}
+    <motion.div
+      id="projects"
+      onViewportEnter={() => setSelectedPage("Projects")}
+      viewport={{ once: false, amount: 0.3 }}
+      className="bg-amber-50 h-screen"
+    >
+      Projects
+    </motion.div>
+  );
+};
 
-export default Projects
+export default Projects;

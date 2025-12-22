@@ -1,108 +1,146 @@
 import { NavLinks } from "@/shared/NavLinks";
 import { Bars2Icon, XMarkIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
-import AnchorLink from "react-anchor-link-smooth-scroll";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Header = () => {
-  const [selectedPage, setSelectedPage] = useState("Home");
+type Props = {
+  selectedPage: string;
+  setSelectedPage: (page: string) => void;
+};
+
+const Header = ({ selectedPage, setSelectedPage }: Props) => {
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
-  const flexBetween = "flex items-center justify-between";
-
-  //  Check if at the top of the page
   useEffect(() => {
     const handleScroll = () => {
-      setIsTopOfPage(window.scrollY == 0);
+      setIsTopOfPage(window.scrollY === 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const headerBg = isTopOfPage
+    ? "bg-transparent"
+    : "bg-[#FFFFFFCC] backdrop-blur-md";
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const offset = navRef.current?.offsetHeight || 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <nav>
-      <div
-        id="header"
-        className={`${
-          isTopOfPage ? "" : "bg-primary-20"
-        } w-full z-30 fixed top-0 py-4`}
+    <>
+      <nav
+        ref={navRef}
+        className={`w-full z-[20] fixed top-0 ${headerBg} px-12 md:px-32 py-2 flex justify-between items-center`}
       >
-        <div
-          id="navContainer"
-          className={`${flexBetween} w-5/6 mx-auto gap-32`}
-        >
-          {/* LOGO */}
-          <div className="text-xl font-bold">Thony.</div>
-
-          {/* SMALL SCREEN */}
-          <div>
-            <button
-              className={`${
-                isMenuOpen ? "hidden" : "block"
-              } bg-primary-20 p-2 rounded-full hover:bg-primary-30 cursor-pointer md:hidden`}
-              onClick={() => setIsMenuOpen(true)}
-            >
-              <Bars2Icon className="h-6 w-6 text-white" />
-            </button>
-
-            {isMenuOpen && (
-              <div className="z-40 bg-primary-20 fixed top-0 right-0 w-1/3 h-full shadow-2xl md:hidden">
-                <div
-                  className="flex justify-end p-2 m-4 cursor-pointer text-white"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <XMarkIcon className="h-7 w-7" />
-                </div>
-                <div className={`flex flex-col h-full items-center gap-4`}>
-                  {NavLinks.map((navItem) => (
-                    <div
-                      key={navItem}
-                      onClick={() => {
-                        setSelectedPage(navItem);
-                        setIsMenuOpen(false);
-                      }}
-                    >
-                      <AnchorLink
-                        href={`#${navItem.toLowerCase().replace(/\s+/g, "")}`}
-                      >
-                        {navItem}
-                      </AnchorLink>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* BIG SCREEN */}
-          <div className={`hidden md:flex justify-end gap-16`}>
-            {/* MIDDLE */}
-            <div className={`${flexBetween} gap-16`}>
-              {NavLinks.map((navItem) => (
-                <div
-                  key={navItem}
-                  className={`${
-                    selectedPage == navItem ? "text-primary-30" : ""
-                  } hover:text-primary-20 transition duration-500`}
-                  onClick={() => setSelectedPage(navItem)}
-                >
-                  <AnchorLink
-                    href={`#${navItem.toLowerCase().replace(/\s+/g, "")}`}
-                  >
-                    {navItem}
-                  </AnchorLink>
-                </div>
-              ))}
-            </div>
-
-            {/* RIGHT SIDE */}
-            <button>Hire Me</button>
+        <div className="text-3xl">
+          <div
+            onClick={() => scrollToSection("home")}
+            className="cursor-pointer"
+          >
+            Thony.
           </div>
         </div>
-      </div>
-    </nav>
+
+        {/* Desktop navigation */}
+        <div
+          className={`${
+            isTopOfPage ? "text-white" : "text-black"
+          } hidden md:flex items-center gap-lg`}
+        >
+          {NavLinks.map((navItem) => (
+            <div
+              key={navItem}
+              className={`${
+                selectedPage === navItem ? "border-b-4 border-primary" : ""
+              } py-sm cursor-pointer`}
+              onClick={() => {
+                let id = navItem.toLowerCase().replace(/\s+/g, "");
+                setSelectedPage(navItem);
+                scrollToSection(id);
+              }}
+            >
+              {navItem}
+            </div>
+          ))}
+        </div>
+
+        {/* Small screen hamburger */}
+        <div className=" md:hidden">
+          <AnimatePresence mode="wait">
+            {!isMenuOpen && (
+              <motion.div
+                key="menu"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setIsMenuOpen(true)}
+                className="p-sm rounded-full cursor-pointer bg-black"
+              >
+                <Bars2Icon className="h-7 w-7 text-white" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </nav>
+
+      {/* Mobile Menu (outside header so z-index is never blocked) */}
+      {isMenuOpen && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key="close"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-2 flex flex-col gap-44`}
+          >
+            <div
+              className="bg-white w-fit p-sm rounded-full cursor-pointer ml-auto"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <XMarkIcon className="h-7 w-7" />
+            </div>
+
+            <div className=" flex justify-center gap-5">
+              <div className="h-full flex flex-col gap-lg text-white px-20 border-r-2 ">
+                {NavLinks.map((navItem) => (
+                  <div
+                    key={navItem}
+                    onClick={() => {
+                      setSelectedPage(navItem);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <a href={`#${navItem.toLowerCase().replace(/\s+/g, "")}`}>
+                      {navItem}
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              <div className="self-end text-white">
+                <h1>Links</h1>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </>
   );
 };
 

@@ -1,11 +1,52 @@
 @import "tailwindcss";
 
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
+
 @theme {
-  --color-text: #180c1c;
-  --color-background: #f7f2f9;
-  --color-primary-10: #c89cd3;
-  --color-primary-20: #a256b5;
-  --color-primary-30: #824294;
-  --color-secondary: #d39b9c;
-  --color-accent: #c18971;
+  --color-bg: #ffffff;
+
+  --color-primary: #392f5a;
+  --color-primary-light: #534583;
+  --color-primary-dark: #30284b;
+
+  --font-fatFace: "Abril Fatface", serif;
+  --color-accent: #f7b32b;
+
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+
+  --leading-headings: 1;
+  --leading-subheadings: 1.4;
+  --leading-body: 1.6;
+
+  --spacing-sm: 8px;
+  --spacing-smd: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xlg: 56px;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: "Merriweather", serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.25;
+    scroll-behavior: smooth;
+  }
+
+  h1 {
+    font-family: "Lora", serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    letter-spacing: -0.05rem;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
