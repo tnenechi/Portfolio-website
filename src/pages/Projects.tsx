@@ -9,8 +9,8 @@ const Projects = ({ setSelectedPage }: Props) => {
     <motion.div
       id="projects"
       onViewportEnter={() => setSelectedPage("Projects")}
-      viewport={{ once: false, amount: 0.3 }}
-      className="bg-amber-50 h-screen"
+      viewport={{ once: false, amount: 0.1 }}
+      className="my_section flex justify-center items-center"
     >
       Projects
     </motion.div>

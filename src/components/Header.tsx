@@ -1,26 +1,40 @@
 import { NavLinks } from "@/shared/NavLinks";
-import { Bars2Icon, XMarkIcon } from "@heroicons/react/16/solid";
+import { FaBars, FaLinkedinIn } from "react-icons/fa6";
+import { MdClose } from "react-icons/md";
+import { TiSocialGithub } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { BiLogoGmail } from "react-icons/bi";
+
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 type Props = {
   selectedPage: string;
   setSelectedPage: (page: string) => void;
+  onComplete: () => void;
 };
 
-const Header = ({ selectedPage, setSelectedPage }: Props) => {
+const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+
     const handleScroll = () => {
       setIsTopOfPage(window.scrollY === 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+    return () => {
+      document.body.style.overflow = "auto";
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isMenuOpen]);
 
   const headerBg = isTopOfPage
     ? "bg-transparent"
@@ -40,33 +54,68 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
     });
   };
 
+  useGSAP(() => {
+    //NAV ONLOAD ANIMATION
+    const navtl = gsap.timeline({
+      defaults: { x: -10, opacity: 0, duration: 0.5, ease: "power1.out" },
+    });
+
+    navtl.from("#logo", {}).from(".navLinks", { onComplete }, "-=0.1");
+
+    // HOVER ANIMATION
+    const links = gsap.utils.toArray<HTMLElement>(".hoverLinks");
+
+    const onEnter = (e: Event) => {
+      gsap.to(e.currentTarget, {
+        scale: 0.9,
+        duration: 0.2,
+        overwrite: true,
+      });
+    };
+
+    const onLeave = (e: Event) => {
+      gsap.to(e.currentTarget, { scale: 1, duration: 0.2, overwrite: true });
+    };
+
+    links.forEach((link) => {
+      link.addEventListener("mouseenter", onEnter);
+      link.addEventListener("mouseleave", onLeave);
+
+      return () => {
+        link.removeEventListener("mouseenter", onEnter);
+        link.removeEventListener("mouseleave", onLeave);
+      };
+    });
+  });
+
   return (
     <>
       <nav
         ref={navRef}
-        className={`w-full z-[20] fixed top-0 ${headerBg} px-12 md:px-32 py-2 flex justify-between items-center`}
+        className={`w-full z-[20] fixed top-0 ${headerBg} px-12 md:px-32 py-4 flex justify-between items-center`}
       >
-        <div className="text-3xl">
-          <div
-            onClick={() => scrollToSection("home")}
-            className="cursor-pointer"
-          >
-            Thony.
-          </div>
+        <div
+          id="logo"
+          onClick={() => scrollToSection("home")}
+          className={`${
+            isTopOfPage ? "text-white" : "text-black"
+          } cursor-pointer text-2xl tracking-tight`}
+        >
+          Thony.
         </div>
 
         {/* Desktop navigation */}
         <div
           className={`${
             isTopOfPage ? "text-white" : "text-black"
-          } hidden md:flex items-center gap-lg`}
+          } hidden md:flex items-center gap-10`}
         >
           {NavLinks.map((navItem) => (
             <div
               key={navItem}
               className={`${
-                selectedPage === navItem ? "border-b-4 border-primary" : ""
-              } py-sm cursor-pointer`}
+                selectedPage === navItem ? "border-b-2 border-primary" : ""
+              } py-2 cursor-pointer navLinks hoverLinks`}
               onClick={() => {
                 let id = navItem.toLowerCase().replace(/\s+/g, "");
                 setSelectedPage(navItem);
@@ -80,65 +129,76 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
 
         {/* Small screen hamburger */}
         <div className=" md:hidden">
-          <AnimatePresence mode="wait">
-            {!isMenuOpen && (
-              <motion.div
-                key="menu"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => setIsMenuOpen(true)}
-                className="p-sm rounded-full cursor-pointer bg-black"
-              >
-                <Bars2Icon className="h-7 w-7 text-white" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {!isMenuOpen && (
+            <div
+              onClick={() => setIsMenuOpen(true)}
+              className="p-2 rounded-full cursor-pointer bg-black"
+            >
+              <FaBars className="text-white" size={25} />
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Mobile Menu (outside header so z-index is never blocked) */}
       {isMenuOpen && (
-        <AnimatePresence mode="wait">
-          <motion.div
-            key="close"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-            className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-2 flex flex-col gap-44`}
+        <div
+          className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-2 flex flex-col gap-44`}
+        >
+          <div
+            className="ml-auto bg-white w-fit p-2 rounded-full cursor-pointer "
+            onClick={() => setIsMenuOpen(false)}
           >
-            <div
-              className="bg-white w-fit p-sm rounded-full cursor-pointer ml-auto"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <XMarkIcon className="h-7 w-7" />
-            </div>
+            <MdClose className="h-7 w-7" />
+          </div>
 
-            <div className=" flex justify-center gap-5">
-              <div className="h-full flex flex-col gap-lg text-white px-20 border-r-2 ">
-                {NavLinks.map((navItem) => (
+          <div className=" flex justify-center gap-5">
+            <div className="h-full flex flex-col gap-10 text-white px-10 border-r-2 ">
+              {NavLinks.map((navItem) => (
+                <div
+                  key={navItem}
+                  onClick={() => {
+                    setSelectedPage(navItem);
+                    setIsMenuOpen(false);
+                  }}
+                >
                   <div
-                    key={navItem}
-                    onClick={() => {
-                      setSelectedPage(navItem);
-                      setIsMenuOpen(false);
-                    }}
+                    onClick={() =>
+                      scrollToSection(navItem.toLowerCase().replace(/\s+/g, ""))
+                    }
+                    className="my_big_text cursor-pointer"
                   >
-                    <a href={`#${navItem.toLowerCase().replace(/\s+/g, "")}`}>
-                      {navItem}
-                    </a>
+                    {navItem}
                   </div>
-                ))}
-              </div>
-
-              <div className="self-end text-white">
-                <h1>Links</h1>
-              </div>
+                </div>
+              ))}
             </div>
-          </motion.div>
-        </AnimatePresence>
+
+            <div id="socials" className="self-end text-white flex gap-4">
+              <a
+                href="mailto:enechithony@gmail.com"
+                target="_blank"
+                className="bg-white p-2 rounded-full"
+              >
+                <BiLogoGmail className="text-black h-5 w-5" />
+              </a>
+              <a
+                href="https://github.com/tnenechi"
+                target="_blank"
+                className="bg-white p-2 rounded-full"
+              >
+                <TiSocialGithub className="text-black h-5 w-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/thony-enechi/"
+                target="_blank"
+                className="bg-white p-2 rounded-full"
+              >
+                <FaLinkedinIn className="text-black h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
