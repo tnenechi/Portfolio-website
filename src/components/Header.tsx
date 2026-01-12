@@ -22,8 +22,7 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
-
+    //To help with the nav's background color change on scroll
     const handleScroll = () => {
       setIsTopOfPage(window.scrollY === 0);
     };
@@ -31,10 +30,9 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-      document.body.style.overflow = "auto";
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isMenuOpen]);
+  }, []);
 
   const headerBg = isTopOfPage
     ? "bg-transparent"
@@ -60,6 +58,7 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
       defaults: { x: -10, opacity: 0, duration: 0.5, ease: "power1.out" },
     });
 
+    //run the navtl default animation then call onComplete
     navtl.from("#logo", {}).from(".navLinks", { onComplete }, "-=0.1");
 
     // HOVER ANIMATION

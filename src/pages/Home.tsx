@@ -2,25 +2,40 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/all";
+import { useEffect, useState } from "react";
 gsap.registerPlugin(useGSAP, SplitText);
 
 type Props = {
-  selectedPage: string;
   setSelectedPage: (page: string) => void;
   play: boolean;
 };
 
 const Home = ({ setSelectedPage, play }: Props) => {
+  const [completed, setCompleted] = useState(false);
+
+  // Scroll Lock Effect
+  useEffect(() => {
+    document.body.style.overflow = completed ? "auto" : "hidden";
+    document.documentElement.style.overflow = completed ? "auto" : "hidden";
+
+    // cleanup on unmount
+    return () => {
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+    };
+  }, [completed]);
+
   useGSAP(() => {
     document.fonts.ready.then(() => {
       const subHeaderSplit = SplitText.create(".subheader", {
         type: "chars, words",
       });
 
-      gsap.set([".header1, .header2, .finger-img", subHeaderSplit.chars], {
+      gsap.set([".header1, .header2", subHeaderSplit.chars], {
         opacity: 0,
       });
 
+      //ANimation only runs after nav animations completes
       if (!play) return;
 
       const tl = gsap.timeline();
@@ -74,6 +89,7 @@ const Home = ({ setSelectedPage, play }: Props) => {
         .to(".header2", {
           x: 0,
           duration: 0.5,
+          onComplete: () => setCompleted(true),
         })
         .to(".rotatingO", {
           rotate: 90,
@@ -99,7 +115,7 @@ const Home = ({ setSelectedPage, play }: Props) => {
       </div>
 
       <div className="mx-auto pt-15 text-xl md:text-2xl subheader">
-        Web Developer
+        Full-Stack Developer
       </div>
     </motion.div>
   );
