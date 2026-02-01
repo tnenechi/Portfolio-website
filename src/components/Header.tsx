@@ -91,7 +91,7 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
     <>
       <nav
         ref={navRef}
-        className={`w-full z-[20] fixed top-0 ${headerBg} px-12 md:px-32 py-4 flex justify-between items-center`}
+        className={`w-full z-[20] fixed top-0 ${headerBg} px-x-sm py-y-sm flex justify-between items-center`}
       >
         <div
           id="logo"
@@ -142,17 +142,17 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
       {/* Mobile Menu (outside header so z-index is never blocked) */}
       {isMenuOpen && (
         <div
-          className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-2 flex flex-col gap-44`}
+          className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-y-sm flex flex-col gap-44`}
         >
           <div
-            className="ml-auto bg-white w-fit p-2 rounded-full cursor-pointer "
+            className="ml-auto bg-white text-black w-fit p-2 rounded-full cursor-pointer "
             onClick={() => setIsMenuOpen(false)}
           >
             <MdClose className="h-7 w-7" />
           </div>
 
           <div className=" flex justify-center gap-5">
-            <div className="h-full flex flex-col gap-10 text-white px-10 border-r-2 ">
+            <div className="h-full flex flex-col justify-center items-end gap-10 text-white px-10 border-r-2 ">
               {NavLinks.map((navItem) => (
                 <div
                   key={navItem}
@@ -165,15 +165,15 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
                     onClick={() =>
                       scrollToSection(navItem.toLowerCase().replace(/\s+/g, ""))
                     }
-                    className="my_big_text cursor-pointer"
+                    className="cursor-pointer"
                   >
-                    {navItem}
+                    <p className="text-xl sm:text-2xl tracking-wider">{navItem}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div id="socials" className="self-end text-white flex gap-4">
+            <div id="socials" className="self-end text-white flex flex-col sm:flex-row gap-4">
               <a
                 href="mailto:enechithony@gmail.com"
                 target="_blank"

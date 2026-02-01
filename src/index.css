@@ -1,20 +1,68 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    business --prefersdark;
+}
 
 @theme {
-  --font-primary: "Lora", serif;
-  --font-secondary: "Merriweather", serif;
+  --font-family-heading: "Recia", serif;
+  --font-family-body: "Supreme", sans-serif;
+
+  --text-h1: clamp(6rem, 20vw, 7.594rem);
+  /* --text-h1: 6rem; */
+  --text-h1--line-height: 1;
+  --font-weight-h1: 700;
+  --tracking-h1: -0.04em;
+  --spacing-y-h1: 1.6rem;
+
+  --text-h2: clamp(2rem, 10vw, 5.063rem);
+  /* --text-h2: 2rem; */
+  --text-h2--line-height: 1;
+  --font-weight-h2: 700;
+  --tracking-h2: -0.04em;
+  --spacing-y-h2: 1rem;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --font-weight-body: 400;
+  --tracking-body: 0.03em;
+
+  --spacing-x-sm: 2rem;
+  --spacing-x-lg: 8rem;
+
+  --spacing-y-sm: 1rem;
 }
 
 @layer base {
   html,
   body {
-    font-family: "Teko", serif;
-    font-size: 1.125rem;
-    font-weight: 500;
-    line-height: 1.25;
     scroll-behavior: smooth;
     overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-family-body);
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--text-body--line-height);
+    letter-spacing: var(--tracking-body);
+  }
+
+  h1 {
+    font-family: var(--font-family-heading);
+    font-size: var(--text-h1);
+    font-weight: var(--font-weight-h1);
+    line-height: var(--text-h1--line-height);
+    letter-spacing: var(--tracking-h1);
+  }
+
+  h2 {
+    font-family: var(--font-family-heading);
+    font-size: var(--text-h2);
+    font-weight: var(--font-weight-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--tracking-h2);
   }
 
   img {
@@ -25,18 +73,15 @@
 }
 
 @layer utilities {
-  .my_big_text {
-    font-family: "Lora", serif;
-    font-size: 3.5rem;
-    line-height: 1;
-    letter-spacing: -0.05rem;
+  .my-section {
+    @apply relative w-screen min-h-screen px-(--spacing-x-sm) md:px-(--spacing-x-lg);
   }
 
-  .my_section {
-    position: relative;
-    width: 100vw;
-    min-height: 100vh;
-    /* overflow: auto; */
+  .mobile-menu-icon-container {
+    @apply p-2 rounded-full cursor-pointer bg-primary text-primary-content w-fit;
   }
 
+  .mobile-menu-icon-container .mobile-menu-icon {
+    @apply h-7 w-7;
+  }
 }

@@ -13,73 +13,73 @@ const About = ({ setSelectedPage }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rightRef = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(
-    () => {
-      const aboutContainer = containerRef.current;
-      const rightContainer = rightRef.current;
+  // useGSAP(
+  //   () => {
+  //     const aboutContainer = containerRef.current;
+  //     const rightContainer = rightRef.current;
 
-      if (!aboutContainer || !rightContainer) return;
+  //     if (!aboutContainer || !rightContainer) return;
 
-      // LEFT ANIMATION
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: aboutContainer,
-            start: "top 80%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        })
-        .from(".myImg", { y: 100 })
-        .from(".about", { opacity: 0, y: -50 }, "<")
-        .from(".me", { opacity: 0, x: 100 });
+  //     // LEFT ANIMATION
+  //     gsap
+  //       .timeline({
+  //         scrollTrigger: {
+  //           trigger: aboutContainer,
+  //           start: "top 80%",
+  //           end: "top 50%",
+  //           scrub: 1,
+  //         },
+  //       })
+  //       .from(".myImg", { y: 100 })
+  //       .from(".about", { opacity: 0, y: -50 }, "<")
+  //       .from(".me", { opacity: 0, x: 100 });
 
-      // RIGHT ANIMATION
-      const mm = gsap.matchMedia();
+  //     // RIGHT ANIMATION
+  //     const mm = gsap.matchMedia();
 
-      mm.add(
-        { isMobile: "(max-width: 768px)", isDesktop: "(min-width: 769px)" },
-        (context) => {
-          let { isMobile, isDesktop } = context.conditions ?? {};
+  //     mm.add(
+  //       { isMobile: "(max-width: 768px)", isDesktop: "(min-width: 769px)" },
+  //       (context) => {
+  //         let { isMobile, isDesktop } = context.conditions ?? {};
 
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: isMobile ? rightContainer : aboutContainer,
-              start: isMobile ? "top 20%" : "top 10%",
-              end: () => "+=" + window.innerHeight * 4,
-              scrub: 1,
-              // markers: true,
-              pin: true,
-              pinSpacing: true,
-            },
-          });
+  //         const tl = gsap.timeline({
+  //           scrollTrigger: {
+  //             trigger: isMobile ? rightContainer : aboutContainer,
+  //             start: isMobile ? "top 20%" : "top 10%",
+  //             end: () => "+=" + window.innerHeight * 4,
+  //             scrub: 1,
+  //             // markers: true,
+  //             pin: true,
+  //             pinSpacing: true,
+  //           },
+  //         });
 
-          tl.from(".right_top p", {
-            y: 50,
-            opacity: 0,
-            stagger: 0.5,
-          });
+  //         tl.from(".right_top p", {
+  //           y: 50,
+  //           opacity: 0,
+  //           stagger: 0.5,
+  //         });
 
-          const aboutTexts = gsap.utils.toArray<HTMLElement>(".aboutText");
+  //         const aboutTexts = gsap.utils.toArray<HTMLElement>(".aboutText");
 
-          aboutTexts.forEach((aboutParagraph) => {
-            const textSplit = SplitText.create(aboutParagraph, {
-              type: "chars, words",
-            });
+  //         aboutTexts.forEach((aboutParagraph) => {
+  //           const textSplit = SplitText.create(aboutParagraph, {
+  //             type: "chars, words",
+  //           });
 
-            tl.fromTo(
-              textSplit.chars,
-              {
-                opacity: 0,
-              },
-              { opacity: 1, stagger: 0.05 }
-            );
-          });
-        }
-      );
-    },
-    { scope: containerRef }
-  );
+  //           tl.fromTo(
+  //             textSplit.chars,
+  //             {
+  //               opacity: 0,
+  //             },
+  //             { opacity: 1, stagger: 0.05 }
+  //           );
+  //         });
+  //       }
+  //     );
+  //   },
+  //   { scope: containerRef }
+  // );
 
   return (
     <motion.div
@@ -87,25 +87,23 @@ const About = ({ setSelectedPage }: Props) => {
       id="aboutme"
       viewport={{ once: false, amount: 0.1 }}
       onViewportEnter={() => setSelectedPage("About Me")}
-      className="my_section bg-black text-white px-12 md:px-32 py-12 flex flex-col md:flex-row gap-12"
+      className="my-section  py-12 flex flex-col"
     >
-      <div id="left" className="relative flex-1 flex justify-center">
-        <div className="absolute top-4 left-20 md:left-12">
-          <h1 className="text-9xl">
-            <span className="block about">
-              AB <span className="relative left-16">UT</span>
-            </span>
-            <span className="block relative z-10 me">ME</span>
-          </h1>
-        </div>
-
-        <div className="h-full max-w-full">
-          <img src="/images/me.png" alt="A picture of me" className="myImg" />
-        </div>
+      <div className="pb-y-h1">
+        <h2>
+          ABOUT <br /> ME
+        </h2>
       </div>
 
-      <div className="flex-1 flex items-center bg-amber-">
-        <div ref={rightRef} className="flex flex-col gap-4 tracking-wider leading-6 ">
+      <div className="flex flex-col md:items-center md:flex-row gap-x-sm">
+        <div className="avatar">
+          <div className="w-30 md:w-50 rounded-full bg-amber-200 relative">
+            <img src="/images/me.png" />
+            <div className="absolute inset-0 bg-black/30"></div>
+          </div>
+        </div>
+
+        <div ref={rightRef}>
           <p className="aboutText">
             Hi! I’m Thony, a full-stack developer passionate about turning
             creative ideas into fully functional web applications.
@@ -127,5 +125,4 @@ const About = ({ setSelectedPage }: Props) => {
     </motion.div>
   );
 };
-
 export default About;
