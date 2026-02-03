@@ -40,7 +40,22 @@ const Projects = ({ setSelectedPage }: Props) => {
           </p>
 
           <div className="sm:flex justify-between items-center">
-            <div className="flex gap-2">
+            <div className="flex-1 flex-wrap flex gap-2">
+              <div className="badge badge-xs badge-accent badge-soft">
+                Primary
+              </div>
+              <div className="badge badge-xs badge-accent badge-soft">
+                Primary
+              </div>
+              <div className="badge badge-xs badge-accent badge-soft">
+                Primary
+              </div>
+              <div className="badge badge-xs badge-accent badge-soft">
+                Primary
+              </div>
+              <div className="badge badge-xs badge-accent badge-soft">
+                Primary
+              </div>
               <div className="badge badge-xs badge-accent badge-soft">
                 Primary
               </div>

@@ -55,7 +55,12 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
   useGSAP(() => {
     //NAV ONLOAD ANIMATION
     const navtl = gsap.timeline({
-      defaults: { x: -10, opacity: 0, duration: 0.5, ease: "power1.out" },
+      defaults: {
+        yPercent: "100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power1.out",
+      },
     });
 
     //run the navtl default animation then call onComplete
@@ -167,13 +172,18 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
                     }
                     className="cursor-pointer"
                   >
-                    <p className="text-xl sm:text-2xl tracking-wider">{navItem}</p>
+                    <p className="text-xl sm:text-2xl tracking-wider">
+                      {navItem}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div id="socials" className="self-end text-white flex flex-col sm:flex-row gap-4">
+            <div
+              id="socials"
+              className="self-end text-white flex flex-col sm:flex-row gap-4"
+            >
               <a
                 href="mailto:enechithony@gmail.com"
                 target="_blank"
