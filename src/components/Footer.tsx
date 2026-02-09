@@ -1,4 +1,3 @@
-import { BiLogoGmail } from "react-icons/bi";
 import { FaChevronUp, FaLinkedinIn } from "react-icons/fa6";
 import { TiSocialGithub } from "react-icons/ti";
 
