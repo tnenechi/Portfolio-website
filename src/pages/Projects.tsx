@@ -4,8 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef, useState } from "react";
 import { projects } from "@/shared/myProjects";
-import { PiCaretDownBold } from "react-icons/pi";
-import { MdArrowOutward, MdClose, MdOpenInFull } from "react-icons/md";
+import { MdArrowOutward, MdClose } from "react-icons/md";
 import { TbInfoSquareRounded } from "react-icons/tb";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
