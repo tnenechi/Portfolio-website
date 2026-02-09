@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes:
-    light --default,
-    business --prefersdark;
+  themes: business --default;
 }
 
 @theme {
@@ -29,6 +27,7 @@
   --tracking-body: 0.03em;
 
   --spacing-x-sm: 2rem;
+  --spacing-x-md: 4rem;
   --spacing-x-lg: 8rem;
 
   --spacing-y-sm: 1rem;
@@ -74,7 +73,12 @@
 
 @layer utilities {
   .my-section {
-    @apply relative w-screen min-h-screen px-(--spacing-x-sm) md:px-(--spacing-x-lg);
+    @apply relative w-screen min-h-screen;
+  }
+
+  .my-section,
+  nav {
+    @apply px-(--spacing-x-sm) md:px-(--spacing-x-md);
   }
 
   .mobile-menu-icon-container {

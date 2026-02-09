@@ -13,10 +13,9 @@ gsap.registerPlugin(useGSAP);
 type Props = {
   selectedPage: string;
   setSelectedPage: (page: string) => void;
-  onComplete: () => void;
 };
 
-const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
+const Header = ({ selectedPage, setSelectedPage }: Props) => {
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
@@ -58,13 +57,13 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
       defaults: {
         yPercent: "100%",
         opacity: 0,
-        duration: 0.5,
+        duration: 1,
         ease: "power1.out",
       },
     });
 
     //run the navtl default animation then call onComplete
-    navtl.from("#logo", {}).from(".navLinks", { onComplete }, "-=0.1");
+    navtl.from("#logo", {}).from(".navLinks", {}, "<");
 
     // HOVER ANIMATION
     const links = gsap.utils.toArray<HTMLElement>(".hoverLinks");
@@ -96,7 +95,7 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
     <>
       <nav
         ref={navRef}
-        className={`w-full z-[20] fixed top-0 ${headerBg} px-x-sm py-y-sm flex justify-between items-center`}
+        className={`w-full z-[20] fixed top-0 ${headerBg} py-y-sm flex justify-between items-center`}
       >
         <div
           id="logo"
@@ -129,6 +128,15 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
               {navItem}
             </div>
           ))}
+
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:enechithony@gmail.com"
+            className="btn navBtn"
+          >
+            Get in touch
+          </a>
         </div>
 
         {/* Small screen hamburger */}
@@ -191,19 +199,21 @@ const Header = ({ selectedPage, setSelectedPage, onComplete }: Props) => {
               >
                 <BiLogoGmail className="text-black h-5 w-5" />
               </a>
-              <a
-                href="https://github.com/tnenechi"
-                target="_blank"
-                className="bg-white p-2 rounded-full"
-              >
-                <TiSocialGithub className="text-black h-5 w-5" />
-              </a>
+
               <a
                 href="https://www.linkedin.com/in/thony-enechi/"
                 target="_blank"
                 className="bg-white p-2 rounded-full"
               >
                 <FaLinkedinIn className="text-black h-5 w-5" />
+              </a>
+
+              <a
+                href="https://github.com/tnenechi"
+                target="_blank"
+                className="bg-white p-2 rounded-full"
+              >
+                <TiSocialGithub className="text-black h-5 w-5" />
               </a>
             </div>
           </div>

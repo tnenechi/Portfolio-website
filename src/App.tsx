@@ -11,16 +11,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
   const [selectedPage, setSelectedPage] = useState("Home"); //used to underline the active page when clicked from the header or when scrolled to;  individual components are wrapped in <motion.div> to detect when they enter the viewport
-  const [step, setStep] = useState(0); //Header sets step = 1 when animation completes, then home animations begins ("play")
 
   return (
     <div>
-      <Header
-        setSelectedPage={setSelectedPage}
-        selectedPage={selectedPage}
-        onComplete={() => setStep(1)}
-      />
-      <Home setSelectedPage={setSelectedPage} play={step === 1} />
+      <Header setSelectedPage={setSelectedPage} selectedPage={selectedPage} />
+      <Home setSelectedPage={setSelectedPage} />
       <About setSelectedPage={setSelectedPage} />
       <Projects setSelectedPage={setSelectedPage} />
       <Footer />
