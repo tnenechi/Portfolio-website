@@ -1,12 +1,14 @@
 import { NavLinks } from "@/shared/NavLinks";
+import { useEffect, useRef, useState } from "react";
+import { BiLogoGmail } from "react-icons/bi";
 import { FaBars, FaLinkedinIn } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
 import { TiSocialGithub } from "react-icons/ti";
-import { useEffect, useRef, useState } from "react";
-import { BiLogoGmail } from "react-icons/bi";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { SplitText } from "gsap/all";
 
 gsap.registerPlugin(useGSAP);
 
@@ -19,6 +21,7 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const navBtn = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     //To help with the nav's background color change on scroll
@@ -52,43 +55,95 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
   };
 
   useGSAP(() => {
-    //NAV ONLOAD ANIMATION
-    const navtl = gsap.timeline({
-      defaults: {
-        yPercent: "100%",
-        opacity: 0,
-        duration: 1,
-        ease: "power1.out",
-      },
+    gsap.from("#logo", {
+      yPercent: 100,
+      duration: 1.5,
+      ease: "power3.out",
     });
 
-    //run the navtl default animation then call onComplete
-    navtl.from("#logo", {}).from(".navLinks", {}, "<");
+    gsap.from(".navLinks", {
+      yPercent: "100%",
+      opacity: 0,
+      duration: 1,
+      ease: "power1.out",
+    });
+
+    gsap.from(navBtn.current, {
+      yPercent: 110,
+      duration: 0.9,
+      ease: "power3.out",
+      delay: 1,
+    });
 
     // HOVER ANIMATION
-    const links = gsap.utils.toArray<HTMLElement>(".hoverLinks");
+    const links = gsap.utils.toArray<HTMLElement>(".navLinks");
+    const splitTextMap = new Map<HTMLElement, SplitText>();
 
     const onEnter = (e: Event) => {
-      gsap.to(e.currentTarget, {
-        scale: 0.9,
-        duration: 0.2,
+      const target = e.currentTarget as HTMLElement;
+      let splitText = splitTextMap.get(target);
+
+      if (!splitText) {
+        splitText = new SplitText(target, { type: "chars" });
+        splitTextMap.set(target, splitText);
+      }
+
+      gsap.to(splitText.chars, {
+        y: -5,
+        stagger: 0.03,
+        duration: 0.1,
+        ease: "power1.out",
         overwrite: true,
       });
     };
 
     const onLeave = (e: Event) => {
-      gsap.to(e.currentTarget, { scale: 1, duration: 0.2, overwrite: true });
+      const target = e.currentTarget as HTMLElement;
+      const splitText = splitTextMap.get(target);
+
+      if (splitText) {
+        gsap.to(splitText.chars, {
+          y: 0,
+          stagger: 0.03,
+          duration: 0.1,
+          ease: "power1.out",
+          overwrite: true,
+        });
+      }
     };
 
     links.forEach((link) => {
       link.addEventListener("mouseenter", onEnter);
       link.addEventListener("mouseleave", onLeave);
+    });
 
-      return () => {
+    const onEnterNavBtn = () => {
+      gsap.to(navBtn.current, {
+        scale: 0.95,
+        overwrite: true,
+      });
+    };
+
+    const onLeaveNavBtn = () => {
+      gsap.to(navBtn.current, {
+        scale: 1,
+        overwrite: true,
+      });
+    };
+
+    navBtn.current?.addEventListener("mouseenter", onEnterNavBtn);
+    navBtn.current?.addEventListener("mouseleave", onLeaveNavBtn);
+
+    return () => {
+      links.forEach((link) => {
         link.removeEventListener("mouseenter", onEnter);
         link.removeEventListener("mouseleave", onLeave);
-      };
-    });
+      });
+      splitTextMap.forEach((splitText) => splitText.revert());
+
+      navBtn.current?.removeEventListener("mouseenter", onEnterNavBtn);
+      navBtn.current?.removeEventListener("mouseleave", onLeaveNavBtn);
+    };
   });
 
   return (
@@ -98,13 +153,12 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
         className={`w-full z-[20] fixed top-0 ${headerBg} py-y-sm flex justify-between items-center`}
       >
         <div
-          id="logo"
           onClick={() => scrollToSection("home")}
           className={`${
             isTopOfPage ? "text-white" : "text-black"
-          } cursor-pointer text-2xl tracking-tight`}
+          } cursor-pointer text-2xl tracking-tight overflow-hidden`}
         >
-          Thony.
+          <p id="logo">Thony.</p>
         </div>
 
         {/* Desktop navigation */}
@@ -117,8 +171,8 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
             <div
               key={navItem}
               className={`${
-                selectedPage === navItem ? "border-b-2 border-primary" : ""
-              } py-2 cursor-pointer navLinks hoverLinks`}
+                selectedPage === navItem ? "border-b-2 border-accent" : ""
+              } py-2 cursor-pointer navLinks`}
               onClick={() => {
                 let id = navItem.toLowerCase().replace(/\s+/g, "");
                 setSelectedPage(navItem);
@@ -129,14 +183,17 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
             </div>
           ))}
 
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="mailto:enechithony@gmail.com"
-            className="btn navBtn"
-          >
-            Get in touch
-          </a>
+          <div className="overflow-hidden">
+            <div ref={navBtn}>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="mailto:enechithony@gmail.com"
+              >
+                <ShinyButton className="bg-accent">Get in touch</ShinyButton>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Small screen hamburger */}

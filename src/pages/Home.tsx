@@ -1,4 +1,8 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
+import { Particles } from "@/components/ui/particles";
+import { PiFlowerThin } from "react-icons/pi";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/all";
@@ -9,70 +13,42 @@ type Props = {
 };
 
 const Home = ({ setSelectedPage }: Props) => {
+  const h1Ref = useRef(null);
+  const pRef = useRef(null);
+  const otw = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
-    document.fonts.ready.then(() => {
-      const subHeaderSplit = SplitText.create(".subheader", {
-        type: "chars, words",
-      });
-
-      gsap.set([".header1, .header2", subHeaderSplit.chars], {
-        opacity: 0,
-      });
-
+    if (h1Ref.current && pRef.current && otw.current) {
       const tl = gsap.timeline();
 
-      tl.fromTo(
-        ".header1",
+      tl.from(h1Ref.current, {
+        yPercent: 100,
+        duration: 1.5,
+        ease: "power3.out",
+      }).from(
+        pRef.current,
         {
-          y: 100,
-          opacity: 0,
+          yPercent: 100,
+          duration: 0.9,
+          ease: "power3.out",
         },
-        { y: 0, opacity: 1, ease: "power2.out", duration: 1 },
-      )
-        .fromTo(
-          ".header2",
-          {
-            y: 30,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            x: () => (window.innerWidth < 768 ? 50 : 150),
-            opacity: 1,
-            ease: "power2.out",
-            duration: 1,
-          },
-        )
-        .fromTo(
-          subHeaderSplit.chars,
-          {
-            opacity: 0,
-            rotateY: 90,
-            transformOrigin: "center top",
-            perspective: 700,
-            display: "inline-block",
-          },
-          {
-            opacity: 1,
-            rotateY: 0,
-            duration: 0.9,
-            ease: "power2.out",
-            stagger: 0.05,
-          },
-        )
-        .to(".header2", {
-          x: () => (window.innerWidth < 768 ? 100 : 200),
-          ease: "elastic.in(1,0.75)",
-          duration: 0.5,
-          yoyo: true,
-          repeat: 1,
-        })
-        .to(".header2", {
-          x: 0,
-          duration: 0.5,
-        });
+        "-=0.6",
+      ); // Start p animation 0.6s before h1 finishes
+    }
+
+    gsap.from(otw.current, {
+      yPercent: 120,
+      duration: 0.9,
+      delay: 1,
+      ease: "power3.out",
     });
-  });
+
+
+
+    return () => {
+    
+    };
+  }, []);
 
   return (
     <motion.div
@@ -81,15 +57,32 @@ const Home = ({ setSelectedPage }: Props) => {
       onViewportEnter={() => setSelectedPage("Home")}
       viewport={{ once: false, amount: 0.1 }}
     >
-      <div className="flex flex-col">
-        <h1 className="header1 mb-y-h1">
-          HI, <br /> I'm Thony.
-        </h1>
-        <p className="subheader">Full-Stack Developer.</p>
+      <Particles className="absolute inset-0 z-0" />
+      <div className="flex flex-col items-center ">
+        <div className="overflow-hidden">
+          <h1 ref={h1Ref} className="mb-y-h1">
+            Thony.
+          </h1>
+        </div>
 
-        {/* <span className="block header2">
-          I'M TH<span className="rotatingO inline-block">O</span>NY
-        </span> */}
+        <div className="overflow-hidden">
+          <p ref={pRef}>Full-Stack Developer</p>
+        </div>
+      </div>
+      <div className="overflow-hidden relative  -bottom-30 md:-bottom-30 ml-auto p-2">
+        <div ref={otw} className="flex items-center gap-2">
+          <div>OPEN TO WORK</div>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 2,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          >
+            <PiFlowerThin className="text-accent"/>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
