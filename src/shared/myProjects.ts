@@ -1,5 +1,5 @@
 type Project = {
-  video: string;
+  video?: string;
   image: string;
   name: string;
   description: string[];
@@ -11,31 +11,60 @@ type Project = {
 export const projects: Project[] = [
   {
     video: "/videos/projects/let's-cook/project-vid.mp4",
-    image: "/images/projects/et's-cook/project-img.png",
+    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352",
     name: "Let's Cook",
     tech: [
       "TypeScript",
       "React",
       "Node.js",
       "Express",
-      "ProstgreSQL",
+      "PostgreSQL",
       "JWT",
       "Tailwind",
     ],
     url: "https://lets-cook.onrender.com/",
     repo: "https://github.com/tnenechi/Lets-Cook",
-
     description: [
-      "Let’s Cook is a full-stack recipe discovery web app that helps users find meals based on ingredients they already have, reducing food waste and decision fatigue.",
-      "Users can search recipes, view detailed summaries, and save favorites to their personal collection.",
-      "The app features secure authentication with JWT access and refresh tokens, protected routes, and persistent sessions using HTTP-only cookies.",
-      "The frontend is built with React, React Router, and Tailwind/DaisyUI, while the backend uses Express, PostgreSQL, and RESTful APIs.",
-      "The architecture emphasizes clean separation of concerns, centralized API handling, and scalable auth state management via React Context.",
-      "Ingredient-based recipe search",
-      "User authentication and session persistence",
-      "Save and unsave recipes with real-time UI updates",
-      "Responsive, modern UI",
-      "Secure backend with token rotation and protected endpoints",
+      "Let’s Cook is a full-stack recipe discovery web app that helps users find meals based on ingredients they already have.",
+      "Users can search recipes, view detailed summaries, and save favorites.",
+      "Implements secure authentication with JWT access and refresh tokens.",
+      "Built with React, Express, and PostgreSQL using RESTful APIs.",
+      "Features protected routes, persistent sessions, and responsive UI.",
+    ],
+  },
+  {
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+    name: "DevTrack",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "NextAuth",
+      "Tailwind",
+    ],
+    url: "https://devtrack-demo.vercel.app/",
+    repo: "https://github.com/yourusername/devtrack",
+    description: [
+      "A developer productivity dashboard for tracking tasks and coding goals.",
+      "Includes authentication, protected dashboards, and real-time updates.",
+      "Users can create, edit, and manage project boards.",
+      "Uses Prisma ORM for database management and clean schema design.",
+      "Optimized for performance with server-side rendering and API routes.",
+    ],
+  },
+  {
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+    name: "FinSight",
+    tech: ["React", "TypeScript", "Chart.js", "Node.js", "MongoDB", "Express"],
+    url: "https://finsight-demo.onrender.com/",
+    repo: "https://github.com/yourusername/finsight",
+    description: [
+      "A financial analytics dashboard for tracking income and expenses.",
+      "Interactive charts provide visual insights into spending habits.",
+      "RESTful backend built with Express and MongoDB.",
+      "Responsive UI with dynamic data visualization.",
+      "Implements secure user authentication and account management.",
     ],
   },
 ];

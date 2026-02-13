@@ -1,5 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import { motion } from "framer-motion";
+// import { SpinningText } from "@/components/ui/spinning-text";
+import { LightRays } from "@/components/ui/light-rays";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useRef } from "react";
@@ -11,75 +13,55 @@ type Props = {
 
 const About = ({ setSelectedPage }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const rightRef = useRef<HTMLDivElement | null>(null);
 
-  // useGSAP(
-  //   () => {
-  //     const aboutContainer = containerRef.current;
-  //     const rightContainer = rightRef.current;
+  useGSAP(
+    () => {
+      const introText = gsap.utils.toArray<HTMLElement>(".aboutMe");
+      const pic = gsap.utils.toArray<HTMLElement>(".pic");
+      const aboutText = gsap.utils.toArray<HTMLElement>(".aboutText");
 
-  //     if (!aboutContainer || !rightContainer) return;
+      // top animation
+      gsap.from(introText, {
+        yPercent: -150,
+        duration: 0.9,
+        ease: "none",
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 90%",
+          end: "top top",
+          scrub: 1,
+          // markers: true,
+        },
+      });
 
-  //     // LEFT ANIMATION
-  //     gsap
-  //       .timeline({
-  //         scrollTrigger: {
-  //           trigger: aboutContainer,
-  //           start: "top 80%",
-  //           end: "top 50%",
-  //           scrub: 1,
-  //         },
-  //       })
-  //       .from(".myImg", { y: 100 })
-  //       .from(".about", { opacity: 0, y: -50 }, "<")
-  //       .from(".me", { opacity: 0, x: 100 });
+      // bottom animation
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 10%",
+          end: () => "bottom top",
+          scrub: true,
+          pin: true,
+          invalidateOnRefresh: true,
+          snap: 1 / (pic.length + aboutText.length - 1),
+          // markers: true,
+        },
+      });
 
-  //     // RIGHT ANIMATION
-  //     const mm = gsap.matchMedia();
+      gsap.set([...aboutText, ...pic], { opacity: 0 });
+      tl.to(pic, { opacity: 1, ease: "power3.in" });
 
-  //     mm.add(
-  //       { isMobile: "(max-width: 768px)", isDesktop: "(min-width: 769px)" },
-  //       (context) => {
-  //         let { isMobile, isDesktop } = context.conditions ?? {};
-
-  //         const tl = gsap.timeline({
-  //           scrollTrigger: {
-  //             trigger: isMobile ? rightContainer : aboutContainer,
-  //             start: isMobile ? "top 20%" : "top 10%",
-  //             end: () => "+=" + window.innerHeight * 4,
-  //             scrub: 1,
-  //             // markers: true,
-  //             pin: true,
-  //             pinSpacing: true,
-  //           },
-  //         });
-
-  //         tl.from(".right_top p", {
-  //           y: 50,
-  //           opacity: 0,
-  //           stagger: 0.5,
-  //         });
-
-  //         const aboutTexts = gsap.utils.toArray<HTMLElement>(".aboutText");
-
-  //         aboutTexts.forEach((aboutParagraph) => {
-  //           const textSplit = SplitText.create(aboutParagraph, {
-  //             type: "chars, words",
-  //           });
-
-  //           tl.fromTo(
-  //             textSplit.chars,
-  //             {
-  //               opacity: 0,
-  //             },
-  //             { opacity: 1, stagger: 0.05 }
-  //           );
-  //         });
-  //       }
-  //     );
-  //   },
-  //   { scope: containerRef }
-  // );
+      aboutText.forEach((txt) => {
+        tl.to(txt, {
+          opacity: 1,
+          stagger: 0.1,
+          ease: "none",
+        });
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
     <motion.div
@@ -89,21 +71,27 @@ const About = ({ setSelectedPage }: Props) => {
       onViewportEnter={() => setSelectedPage("About Me")}
       className="my-section  py-12 flex flex-col"
     >
-      <div className="pb-y-h1">
-        <h2>
-          ABOUT <br /> ME
+      <div className="pb-y-h1 overflow-hidden">
+        <h2 className="overflow-hidden">
+          <span className="aboutMe inline-block">ABOUT</span>
+        </h2>
+        <h2 className="overflow-hidden">
+          <span className="aboutMe inline-block">ME</span>
         </h2>
       </div>
 
       <div className="flex flex-col md:items-center md:flex-row gap-x-sm">
+        {/* image */}
         <div className="avatar">
-          <div className="w-30 md:w-50 rounded-full bg-amber-200 relative">
+          <div className="ring-2 w-30 md:w-50 rounded-full relative pic">
+            {/* <div className="absolute inset-0 bg-black/20"></div> */}
+
             <img src="/images/me.png" />
-            <div className="absolute inset-0 bg-black/30"></div>
+            <LightRays color="#00cc8b40" speed={10} />
           </div>
         </div>
 
-        <div ref={rightRef}>
+        <div className="flex flex-col gap-4">
           <p className="aboutText">
             Hi! I’m Thony, a full-stack developer passionate about turning
             creative ideas into fully functional web applications.

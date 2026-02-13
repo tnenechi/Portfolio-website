@@ -43,11 +43,7 @@ const Home = ({ setSelectedPage }: Props) => {
       ease: "power3.out",
     });
 
-
-
-    return () => {
-    
-    };
+    return () => {};
   }, []);
 
   return (
@@ -69,7 +65,8 @@ const Home = ({ setSelectedPage }: Props) => {
           <p ref={pRef}>Full-Stack Developer</p>
         </div>
       </div>
-      <div className="overflow-hidden relative  -bottom-30 md:-bottom-30 ml-auto p-2">
+
+      <div className="overflow-hidden relative -bottom-50 md:-bottom-30 ml-auto">
         <div ref={otw} className="flex items-center gap-2">
           <div>OPEN TO WORK</div>
           <motion.div
@@ -80,7 +77,7 @@ const Home = ({ setSelectedPage }: Props) => {
               repeat: Infinity,
             }}
           >
-            <PiFlowerThin className="text-accent"/>
+            <PiFlowerThin className="text-accent" />
           </motion.div>
         </div>
       </div>

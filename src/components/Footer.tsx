@@ -8,7 +8,7 @@ const Footer = () => {
       className="relative w-screen h-[80vh] "
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
-      <div className="w-full h-[80vh] fixed bottom-0 text-black bg-[#FFFFFFCC] backdrop-blur-md flex flex-col items-center justify-center gap-20 text-2xl tracking-wider ">
+      <div className="w-full h-[80vh] fixed bottom-0 text-black bg-base-content flex flex-col items-center justify-center gap-20 text-2xl tracking-wider ">
         <div className="top flex flex-col justify-center items-center sm:flex-row sm:items-end">
           {/* Links */}
           <div className="flex flex-col gap-6 items-center sm:items-start">
@@ -27,18 +27,18 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.linkedin.com/in/thony-enechi/"
-              className="bg-[#909090] shadow-2xl p-2 rounded-full flex justify-center items-center"
+              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center"
             >
-              <FaLinkedinIn className="text-black h-7 w-7" />
+              <FaLinkedinIn className="text-accent-content h-7 w-7" />
             </a>
 
             <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/tnenechi"
-              className="bg-[#909090] shadow-2xl p-2 rounded-full flex justify-center items-center"
+              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center"
             >
-              <TiSocialGithub className="text-black h-7 w-7" />
+              <TiSocialGithub className="text-accent-content h-7 w-7" />
             </a>
           </div>
         </div>
@@ -51,7 +51,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <a href="#home" className="btn btn-circle absolute bottom-10 right-10">
+        <a
+          href="#home"
+          className="btn btn-circle bg-accent text-accent-content border-2 border-accent-content absolute bottom-10 right-10"
+        >
           <FaChevronUp />
         </a>
       </div>
