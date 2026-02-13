@@ -8,30 +8,7 @@ type Project = {
   repo: string;
 };
 
-export const projects: Project[] = [
-  {
-    video: "/videos/projects/let's-cook/project-vid.mp4",
-    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352",
-    name: "Let's Cook",
-    tech: [
-      "TypeScript",
-      "React",
-      "Node.js",
-      "Express",
-      "PostgreSQL",
-      "JWT",
-      "Tailwind",
-    ],
-    url: "https://lets-cook.onrender.com/",
-    repo: "https://github.com/tnenechi/Lets-Cook",
-    description: [
-      "Let’s Cook is a full-stack recipe discovery web app that helps users find meals based on ingredients they already have.",
-      "Users can search recipes, view detailed summaries, and save favorites.",
-      "Implements secure authentication with JWT access and refresh tokens.",
-      "Built with React, Express, and PostgreSQL using RESTful APIs.",
-      "Features protected routes, persistent sessions, and responsive UI.",
-    ],
-  },
+const dummyData: Project[] = [
   {
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
     name: "DevTrack",
@@ -67,4 +44,31 @@ export const projects: Project[] = [
       "Implements secure user authentication and account management.",
     ],
   },
+];
+
+export const projects: Project[] = [
+  {
+    video: "/videos/projects/let's-cook/project-vid.mp4",
+    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352",
+    name: "Let's Cook",
+    tech: [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "JWT",
+      "Tailwind",
+    ],
+    url: "https://lets-cook.onrender.com/",
+    repo: "https://github.com/tnenechi/Lets-Cook",
+    description: [
+      "Let’s Cook is a full-stack recipe discovery web app that helps users find meals based on ingredients they already have.",
+      "Users can search recipes, view detailed summaries, and save favorites.",
+      "Implements secure authentication with JWT access and refresh tokens.",
+      "Built with React, Express, and PostgreSQL using RESTful APIs.",
+      "Features protected routes, persistent sessions, and responsive UI.",
+    ],
+  },
+  // ...dummyData,
 ];

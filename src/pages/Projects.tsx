@@ -15,7 +15,6 @@ type Props = {
 
 const Projects = ({ setSelectedPage }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const projectInfoRef = useRef<HTMLDivElement | null>(null);
   const pinnedRef = useRef<HTMLDivElement | null>(null);
   const [openProject, setOpenProject] = useState<null | number>(null);
 

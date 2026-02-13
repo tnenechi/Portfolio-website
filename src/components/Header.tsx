@@ -190,7 +190,9 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
                 rel="noopener noreferrer"
                 href="mailto:enechithony@gmail.com"
               >
-                <ShinyButton className="bg-accent border-2 border-accent-content">Get in touch</ShinyButton>
+                <ShinyButton className="bg-[#00865C] border-2 border-accent-content text-black">
+                  Get in touch
+                </ShinyButton>
               </a>
             </div>
           </div>
