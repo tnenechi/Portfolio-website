@@ -49,6 +49,7 @@ const Projects = ({ setSelectedPage }: Props) => {
           start: "top 15%",
           end: () => "+=" + wrapper?.offsetWidth,
           scrub: 1,
+          snap: 1 / (panels.length - 1),
           pin: true,
           invalidateOnRefresh: true,
           // markers: true,
@@ -84,7 +85,7 @@ const Projects = ({ setSelectedPage }: Props) => {
                 className="panel shrink-0 w-full h-full flex items-center justify-center"
               >
                 <div className="w-[80vw] md:w-[50vw] px-4">
-                  <div className="flex flex-col justify-between h-full bg-base-300 rounded-2xl shadow-sm p-4">
+                  <div className="flex flex-col justify-between h-full bg-base-200 rounded-2xl shadow-sm p-4">
                     <figure className="hidden sm:block h-[40vh]">
                       <video
                         src={project.video}
@@ -109,7 +110,7 @@ const Projects = ({ setSelectedPage }: Props) => {
                         </ul>
 
                         <TbInfoSquareRounded
-                          className="cursor-pointer mb-6 transition-transform duration-200 hover:scale-110"
+                          className="text-accent cursor-pointer mb-6 transition-transform duration-200 hover:scale-110"
                           onClick={() => setOpenProject(index)}
                           title="Read more."
                           size={20}

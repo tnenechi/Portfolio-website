@@ -48,9 +48,9 @@ type Project = {
 
 export const projects: Project[] = [
   {
-    video: "/videos/projects/let's-cook/project-vid.mp4",
-    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352",
     name: "Let's Cook",
+    video: "/videos/projects/let's-cook/project-vid.mp4",
+    image: "/images/projects/letsCook.png",
     tech: [
       "TypeScript",
       "React",
@@ -70,5 +70,31 @@ export const projects: Project[] = [
       "Features protected routes, persistent sessions, and responsive UI.",
     ],
   },
-  // ...dummyData,
+
+  {
+    name: "TechniqueAI",
+    image: "/images/projects/techniqueAI.png",
+    tech: [
+      "React",
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Flask",
+      "MediaPipe",
+      "OpenCV",
+      "NumPy",
+      "scikit-learn",
+    ],
+    url: "https://youtu.be/4z0wOGCTaDw",
+    repo: "https://github.com/tnenechi/Over-Head-Press-Form-Detection-with-an-LSTM-model",
+    description: [
+      "TechniqueAI is an AI-powered computer vision tool that analyzes overhead press form in real-time.",
+      "Detects common mistakes in elbow and knee alignment (elbow flare, knee cave) using frame-by-frame keypoint analysis.",
+      "Built three model architectures: Inception-style LSTM, custom LSTM, and feedforward neural network.",
+      "Processes video input via MediaPipe for pose estimation, computes joint differences, and outputs per-frame predictions.",
+      "Exposed through a REST API with video upload endpoint and multiple model selection.",
+      "Includes complete training pipelines with checkpointing, early stopping, and detailed per-joint evaluation metrics (accuracy, precision, recall, F1).",
+      "Designed to help lifters improve technique and reduce injury risk during strength training.",
+    ],
+  },
 ];
