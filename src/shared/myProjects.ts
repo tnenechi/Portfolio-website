@@ -63,7 +63,7 @@ export const projects: Project[] = [
     url: "https://lets-cook.onrender.com/",
     repo: "https://github.com/tnenechi/Lets-Cook",
     description: [
-      "Let’s Cook is a full-stack recipe discovery web app that helps users find meals based on ingredients they already have.",
+      "Let’s Cook is a full-stack recipe discovery web app that integrates the Spoonacular API to help users find meals based on ingredients they already have.",
       "Users can search recipes, view detailed summaries, and save favorites.",
       "Implements secure authentication with JWT access and refresh tokens.",
       "Built with React, Express, and PostgreSQL using RESTful APIs.",
