@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Links */}
           <div className="flex flex-col gap-6 items-center sm:items-start">
             <a
-              href="/docs/CV.pdf"
+              href="/docs/Thony-Enechi-CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline hover:decoration-accent underline-offset-4"
