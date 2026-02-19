@@ -86,7 +86,10 @@ const About = ({ setSelectedPage }: Props) => {
           <div className="ring-2 w-30 md:w-50 rounded-full relative pic">
             {/* <div className="absolute inset-0 bg-black/20"></div> */}
 
-            <img src="/images/me.png" />
+            <img
+              src="/images/me.png"
+              alt="Thony Enechi, Full-Stack Developer"
+            />
             <LightRays color="#00cc8b40" speed={10} />
           </div>
         </div>

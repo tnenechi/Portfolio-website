@@ -12,10 +12,19 @@ const Footer = () => {
         <div className="top flex flex-col justify-center items-center sm:flex-row sm:items-end">
           {/* Links */}
           <div className="flex flex-col gap-6 items-center sm:items-start">
-            <a href="/docs/CV.pdf" target="_blank" rel="noopener noreferrer">
+            <a
+              href="/docs/CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline hover:decoration-accent underline-offset-4"
+            >
               My CV
             </a>
-            <a href="mailto:enechithony@gmail.com" target="_blank">
+            <a
+              href="mailto:enechithony@gmail.com"
+              target="_blank"
+              className="hover:underline hover:decoration-accent underline-offset-4"
+            >
               Contact me
             </a>
           </div>
@@ -27,7 +36,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.linkedin.com/in/thony-enechi/"
-              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center"
+              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center transform hover:scale-90 transition duration-300"
             >
               <FaLinkedinIn className="text-accent-content h-7 w-7" />
             </a>
@@ -36,7 +45,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/tnenechi"
-              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center"
+              className="bg-accent border-2 border-accent-content shadow-2xl p-2 rounded-full flex justify-center items-center transform hover:scale-90 transition duration-300"
             >
               <TiSocialGithub className="text-accent-content h-7 w-7" />
             </a>
@@ -53,7 +62,7 @@ const Footer = () => {
 
         <a
           href="#home"
-          className="btn btn-circle bg-accent text-accent-content border-2 border-accent-content absolute bottom-10 right-10"
+          className="btn btn-circle bg-accent text-accent-content border-2 border-accent-content absolute bottom-10 right-10 transform hover:scale-90 transition duration-300"
         >
           <FaChevronUp />
         </a>
