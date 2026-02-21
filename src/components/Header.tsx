@@ -2,13 +2,14 @@ import { NavLinks } from "@/shared/NavLinks";
 import { useEffect, useRef, useState } from "react";
 import { BiLogoGmail } from "react-icons/bi";
 import { FaBars, FaLinkedinIn } from "react-icons/fa6";
-import { MdClose } from "react-icons/md";
 import { TiSocialGithub } from "react-icons/ti";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/all";
+import Modal from "./Modal";
+import MyForm from "./MyForm";
 
 gsap.registerPlugin(useGSAP);
 
@@ -19,7 +20,8 @@ type Props = {
 
 const Header = ({ selectedPage, setSelectedPage }: Props) => {
   const [isTopOfPage, setIsTopOfPage] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const navBtn = useRef<HTMLDivElement>(null);
 
@@ -185,24 +187,21 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
 
           <div className="overflow-hidden">
             <div ref={navBtn}>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="mailto:enechithony@gmail.com"
+              <ShinyButton
+                onClick={() => setIsFormModalOpen(true)}
+                className="bg-[#00865C] border-2 border-accent-content text-black"
               >
-                <ShinyButton className="bg-[#00865C] border-2 border-accent-content text-black">
-                  Get in touch
-                </ShinyButton>
-              </a>
+                Get in touch
+              </ShinyButton>
             </div>
           </div>
         </div>
 
         {/* Small screen hamburger */}
         <div className=" md:hidden">
-          {!isMenuOpen && (
+          {!isMobileModalOpen && (
             <div
-              onClick={() => setIsMenuOpen(true)}
+              onClick={() => setIsMobileModalOpen(true)}
               className="p-2 rounded-full cursor-pointer bg-black"
             >
               <FaBars className="text-white" size={25} />
@@ -212,17 +211,8 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
       </nav>
 
       {/* Mobile Menu (outside header so z-index is never blocked) */}
-      {isMenuOpen && (
-        <div
-          className={`w-full h-full z-[30] fixed top-0 bg-black  px-12 md:px-32 py-y-sm flex flex-col gap-44`}
-        >
-          <div
-            className="ml-auto bg-white text-black w-fit p-2 rounded-full cursor-pointer "
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <MdClose className="h-7 w-7" />
-          </div>
-
+      {isMobileModalOpen && (
+        <Modal setIsModalOpen={setIsMobileModalOpen}>
           <div className=" flex justify-center gap-5">
             <div className="h-full flex flex-col justify-center items-end gap-10 text-white px-10 border-r-2 ">
               {NavLinks.map((navItem) => (
@@ -230,7 +220,7 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
                   key={navItem}
                   onClick={() => {
                     setSelectedPage(navItem);
-                    setIsMenuOpen(false);
+                    setIsMobileModalOpen(false);
                   }}
                 >
                   <div
@@ -253,6 +243,7 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
             >
               <a
                 href="mailto:enechithony@gmail.com"
+                rel="noopener noreferrer"
                 target="_blank"
                 className="bg-white p-2 rounded-full"
               >
@@ -261,6 +252,7 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
 
               <a
                 href="https://www.linkedin.com/in/thony-enechi/"
+                rel="noopener noreferrer"
                 target="_blank"
                 className="bg-white p-2 rounded-full"
               >
@@ -269,6 +261,7 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
 
               <a
                 href="https://github.com/tnenechi"
+                rel="noopener noreferrer"
                 target="_blank"
                 className="bg-white p-2 rounded-full"
               >
@@ -276,7 +269,14 @@ const Header = ({ selectedPage, setSelectedPage }: Props) => {
               </a>
             </div>
           </div>
-        </div>
+        </Modal>
+      )}
+
+      {/* GET IN TOUCH */}
+      {isFormModalOpen && (
+        <Modal setIsModalOpen={setIsFormModalOpen}>
+          <MyForm />
+        </Modal>
       )}
     </>
   );
