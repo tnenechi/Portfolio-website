@@ -135,7 +135,7 @@ const Projects = ({ setSelectedPage }: Props) => {
                           rel="noopener noreferrer"
                           className="btn btn-ghost btn-soft btn-accent btn-xs mt-4 sm:mt-0 sm:btn-md"
                         >
-                          View website
+                          {project.website ? "View Website" : "View Project"}
                           <span>
                             <MdArrowOutward size={15} />
                           </span>
@@ -185,17 +185,19 @@ const Projects = ({ setSelectedPage }: Props) => {
                 </span>
               </a>
 
-              <a
-                href={projects[openProject].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost btn-soft btn-xs mt-4 sm:mt-0 sm:btn-md"
-              >
-                View website
-                <span>
-                  <MdArrowOutward size={15} />
-                </span>
-              </a>
+              {projects[openProject].website && (
+                <a
+                  href={projects[openProject].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost btn-soft btn-xs mt-4 sm:mt-0 sm:btn-md"
+                >
+                  View website
+                  <span>
+                    <MdArrowOutward size={15} />
+                  </span>
+                </a>
+              )}
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@ export default function MyForm({ feedbackForm }: formProps) {
     <form
       ref={form}
       onSubmit={sendEmail}
-      className="text-black w-1/2 mx-auto bg-white shadow-md rounded-2xl p-6 space-y-5 border border-gray-200"
+      className="text-black w-full md:w-1/2 mx-auto bg-white shadow-md rounded-2xl p-6 space-y-5 border border-gray-200"
     >
       {feedbackForm ? (
         <div>

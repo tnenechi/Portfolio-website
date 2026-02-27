@@ -6,6 +6,7 @@ type Project = {
   tech: string[];
   url: string;
   repo: string;
+  website?: boolean;
 };
 
 // const dummyData: Project[] = [
@@ -69,6 +70,7 @@ export const projects: Project[] = [
       "Built with React, Express, and PostgreSQL using RESTful APIs.",
       "Features protected routes, persistent sessions, and responsive UI.",
     ],
+    website: true,
   },
 
   {
@@ -85,7 +87,7 @@ export const projects: Project[] = [
       "NumPy",
       "scikit-learn",
     ],
-    url: "https://youtu.be/4z0wOGCTaDw",
+    url: "https://github.com/tnenechi/Over-Head-Press-Form-Detection-with-an-LSTM-model",
     repo: "https://github.com/tnenechi/Over-Head-Press-Form-Detection-with-an-LSTM-model",
     description: [
       "TechniqueAI is an AI-powered computer vision tool that analyzes overhead press form in real-time.",
