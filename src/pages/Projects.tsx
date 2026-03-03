@@ -164,6 +164,7 @@ const Projects = ({ setSelectedPage }: Props) => {
             <p className="text-xl font-bold mb-6">
               {projects[openProject].name}
             </p>
+            
             <ul>
               {projects[openProject].description.map((line, i) => (
                 <p key={i} className="font-light mb-2">
