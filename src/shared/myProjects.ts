@@ -49,6 +49,33 @@ type Project = {
 
 export const projects: Project[] = [
   {
+    name: "EZ Scents",
+    video: "/videos/projects/ez-scents/project-vid.mp4",
+    image: "/images/projects/ez-scents.png",
+    tech: [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Mongoose",
+      "JWT",
+      "Paystack",
+      "Tailwind CSS",
+      "Cloudinary",
+    ],
+    url: "https://ezscents.onrender.com",
+    repo: "https://github.com/tnenechi/EZSCENTS",
+    description: [
+      "EZ Scents is an e-commerce platform for browsing and purchasing premium perfumes online.",
+      "Customers can search and filter products, add items to a cart, and complete checkout using Paystack or bank transfer.",
+      "Implements secure authentication with JWT, protected routes, and role-based admin access.",
+      "Includes an admin dashboard for managing products, orders, inventory, and manual payment confirmations.",
+      "Built with React, Express, MongoDB, and Tailwind CSS, with Cloudinary for image storage and a fully responsive UI.",
+    ],
+    website: true,
+  },
+  {
     name: "Let's Cook",
     video: "/videos/projects/let's-cook/project-vid.mp4",
     image: "/images/projects/letsCook.png",
