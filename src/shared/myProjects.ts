@@ -64,7 +64,7 @@ export const projects: Project[] = [
       "Tailwind CSS",
       "Cloudinary",
     ],
-    url: "https://ezscents.onrender.com",
+    url: "https://secretscent.com",
     repo: "https://github.com/tnenechi/EZSCENTS",
     description: [
       "EZ Scents is an e-commerce platform for browsing and purchasing premium perfumes online.",
